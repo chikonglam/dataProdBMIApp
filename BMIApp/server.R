@@ -38,6 +38,12 @@ getBMICat <- function (bmi){
 # Define server logic to output BMI and BMI category
 shinyServer(function(input, output) {
     bmi <- reactive(calcBMI(input$weight, input$height))
-    output$bmiNum <- renderText({bmi()})
-    output$bmiCat <- renderText({getBMICat(bmi())})
+    output$bmiNum <- renderText({
+        input$okButton 
+        isolate(bmi())
+        })
+    output$bmiCat <- renderText({
+        input$okButton
+        isolate(getBMICat(bmi()))
+        })
 })
