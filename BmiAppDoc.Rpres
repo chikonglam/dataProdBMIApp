@@ -1,0 +1,68 @@
+BMI Shiny Web App Manual
+========================================================
+author: Chi Lam
+date: Nov 20, 2015
+
+Summary and Introduction
+========================================================
+
+Summary
+------------------------
+
+This document describes how the BMI calculating webapp is used, explaining the underlaying fomula, and the interpretation.
+
+Introduction
+------------------------
+- Obesity is increasingly a worldwide problem
+
+- BMI is a simple measurement: only needs height and weight
+
+- BMI may not be very accurate, but can be a good precursor screening
+
+- The webapp helps you calculate your BMI, and identify your BMI obesity category
+
+Using the WebApp
+========================================================
+
+The easiest way is to use the shinyApp.io URL: https://chikonglam.shinyapps.io/DatProdBMIApp
+
+Then follow these steps once the page is loaded:
+
+1. Input your weight (in kg)
+
+2. Input your height (in cm)
+
+3. Click OK.
+  
+Your BMI (Body Mass Index), will then display on the right side.
+
+The source code is also availble for tinkerers:  
+https://github.com/chikonglam/dataProdBMIApp
+
+Calculating BMI
+========================================================
+
+  
+  The following R code showcases the formula used by the webapp to caluculate the BMI. An American male with the average height, and average weight is used as an example.
+
+```{r calcBMI}
+#calculate the BMI with weight in Kg and height in cm
+calcBMI <- function (weightKg, heightCm) weightKg / (heightCm / 100)^2
+calcBMI(88.3, 178.2)
+```
+
+Interpreting BMI
+========================================================
+
+  There are various BMI categories according to the World Health Organization*, the webapp identifies your category according to the table below:
+  
+```{r tableBMI, echo=FALSE}
+lowerBound <- c(NaN, 16, 17, 18.5, 25, 30, 35, 40)
+upperBound <- c( 16, 17, 18.5, 25, 30, 35, 40, NaN)
+bmiCat <- data.frame(lowerBound, upperBound)
+row.names(bmiCat) <- c("Severe thiness", "Moderate thiness", "Mild thiness", "Normal", "Overweight: Pre-obese", "Obese Class I", "Obese Class II", "Obese Class III")
+bmiCat
+```
+
+*http://apps.who.int/bmi/index.jsp?introPage=intro_3.html  accessed Nov 20, 2015
+
